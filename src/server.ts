@@ -1,17 +1,26 @@
 // @ts-ignore
 import fastify from "fastify";
 import {knex} from "./database";
+import crypto from "node:crypto";
+import {env} from "./env";
 
-const port = 3333;
+
+
 const app = fastify();
 
 
 app.get('/hello',async ()=>{
-    return knex("sqlite_schema").select("*");
+    const transaction = await knex("transactions").insert({
+        id:crypto.randomUUID(),
+        title: 'Transação de teste',
+        amount: 1000,
+        
+    }).returning("*");
+    return transaction;
 });
 
 app.listen({
-    port: port,
+    port: parseInt(env.PORT),
 }).then(()=>{
-    console.log(`Http server listening on port ${port} `)
+    console.log(`Http server running `)
 })
