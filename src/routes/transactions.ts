@@ -3,6 +3,9 @@ import {FastifyInstance} from "fastify";
 import {z} from "zod";
 import {randomUUID} from "node:crypto";
 
+//Cookies <--> Formas da gente manter contexto entre requisições
+
+
 export async function transactionsRoutes(app: FastifyInstance) {
     
     app.get('/', async () => {
