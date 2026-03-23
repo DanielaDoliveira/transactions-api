@@ -3,9 +3,6 @@ import {FastifyInstance} from "fastify";
 import {z} from "zod";
 import {randomUUID} from "node:crypto";
 import {checkSessionIdExists} from "../middlewares/check-session-id-exists";
-import { getAllTransactions} from "../docs/get-all-transactions";
-import {getById} from "../docs/get-by-id";
-
 //Cookies <--> Formas da gente manter contexto entre requisições
 
 
