@@ -3,6 +3,8 @@ import {FastifyInstance} from "fastify";
 import {z} from "zod";
 import {randomUUID} from "node:crypto";
 import {checkSessionIdExists} from "../middlewares/check-session-id-exists";
+import { getAllTransactions} from "../docs/get-all-transactions";
+import {getById} from "../docs/get-by-id";
 
 //Cookies <--> Formas da gente manter contexto entre requisições
 
@@ -20,8 +22,10 @@ export async function transactionsRoutes(app: FastifyInstance) {
     
     //#region -> Pega todas as transações
     app.get('/',
-        { preHandler:[checkSessionIdExists] },
-        async (request) => {
+        
+        { preHandler:[checkSessionIdExists],},
+        
+         async (request) => {
         
       const { sessionId } = request.cookies;
       const transactions = await knex("transactions")
@@ -33,14 +37,15 @@ export async function transactionsRoutes(app: FastifyInstance) {
     //#region -> Pega uma transação passando o id como parâmetro 
     app.get(
         '/:id',
-        { preHandler:[checkSessionIdExists]}, 
+        { 
+            preHandler:[checkSessionIdExists],}, 
         async (request
         )=>{
     const getTransactionsParamsSchema = z.object({
         id: z.string().uuid(),
     });
     
-    // @ts-ignore
+
     const { id } = getTransactionsParamsSchema.parse(request.params);
         const { sessionId } = request.cookies;
    
