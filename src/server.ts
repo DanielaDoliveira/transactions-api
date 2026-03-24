@@ -6,7 +6,7 @@ import {app} from "./app";
 
 app.listen({
     
-    port: parseInt(env.PORT),
+    port: (env.PORT),
 }).then(()=>{
     console.log(`Http server running on localhost://${env.PORT} `)
 })
